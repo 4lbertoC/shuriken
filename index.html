@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Shuriken</title>
+		<title>~ Shuriken ~</title>
 		<link rel="stylesheet" type="text/css" href="mystyle.css">
 	</head>
 	<body>
@@ -15,148 +15,37 @@
 				</ul>
 			</nav>
 		</header>
-		<main>
-			<h3>Welcome to the shuriken game!</h3>
-			<div id="">
-				You used <span id="num-shurikens">0</span> shurikens.
-			</div>
-			<br>
-			<section>
-				<div>
-					<div id="shuriken-bag">
+		<main id="main">
+			<section id="collectSection">
+				<h3>Welcome to the shuriken game!</h3>
+					You used <span id="usedShurikens">0</span> shurikens.
+				<p></p>
+				<section>
+					<div id="shurikenBagContainer">
+						<div id="shurikenBag">
+						</div>
+						<p></p>
+						<div class="buttonContainer">
+							<input type="button" value="Take 1 shuriken" id="takeShurikenButton">
+							<input type="button" value="Take 5 shuriken" id="take5ShurikenButton">
+							<input type="button" value="Take 100 shuriken" id="take100ShurikenButton">
+						</div>
 					</div>
-					<p></p>
-					<input type="button" value="Take shuriken" id="takeShurikenBtn">
-				</div>
-				<div id="shuriken-belt">
-					<div>Shuriken Belt</div>
-					<input type="button" value="Throw shurikens" id="throwShurikenBtn">
-					<table id="shuriken-belt-content">
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-						<tr>
-							<td>Shuriken no. 1</td>
-						</tr>
-					</table>
-				</div>
+					<div id="shurikenBeltContainer">
+						<div>Shuriken Belt</div>
+						<div class="buttonContainer">
+							<input type="button" value="Throw shurikens" id="throwShurikenButton">
+						</div>
+						<table id="shurikenBelt">
+							
+						</table>
+					</div>
+				</section>
+			</section>
+			<section id="throwSection">
+				Throwing!
+				<p></p>
+				<input type="button" value="Go Back" id="goBackButton">
 			</section>
 		</main>
 		<footer>
