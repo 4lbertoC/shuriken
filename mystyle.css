@@ -1,0 +1,162 @@
+* {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+body {
+	font-family: Open sans;
+}
+
+header {
+	text-align: right;
+	border-bottom: 1px solid black;
+	background: #eee;
+	width: 100%;
+	top: 0;
+	left: 0;
+	position: fixed;
+	padding: 1px;
+	box-shadow: 0 2px 2px #bbb;
+	height: 80px;
+	z-index: 1000;
+}
+
+header > h2 {
+	margin-right: 30px;
+}
+
+nav {
+	text-align: left;
+	position: absolute;
+	left: 0;
+	top: 40px;
+}
+
+nav > ul {
+	list-style: none;
+}
+
+nav > ul > li, nav > ul > span, nav > span {
+	float: left;
+	margin: 0 10px;
+	cursor: pointer;
+}
+
+nav > ul > li:hover, nav > span:hover {
+	font-weight: bold;
+}
+
+nav > span {
+	margin-top: 15px;
+}
+
+main {
+	padding: 80px 0 25px 0;
+	text-align: center;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	background: #eee;
+	border-top: 1px solid black;
+	width: 100%;
+	padding: 2px;
+	margin: 0;
+	left: 0;
+	height: 25px;
+}
+
+input[type="button"] {
+	font-size: 1.2em;
+	margin: 15px 10px;
+}
+
+section {
+	display: inline-block;
+}
+
+section > div {
+	float: left;
+	margin: 0 20px;
+}
+
+#shuriken-bag {
+	background: black;
+	display: inline-block;
+	width: 150px;
+	height: 200px;
+	border-radius: 150px 150px 220px 50px;
+}
+
+#shuriken-bag:before {
+	content: " ";
+	width: 100px;
+	height: 20px;
+	background: black;
+	position: absolute;
+	border-radius: 0 0 20px 20px;
+}
+
+#shuriken-bag:after {
+	content: "Shuriken Bag";
+	color: white;
+	position: relative;
+	top: 40%;
+}
+
+#takeShurikenBtn {
+	position: relative;
+	top: 0;
+	margin-bottom: 25px;
+}
+
+#shuriken-belt {
+	border: 2px solid black;
+	border-radius: 2px;
+}
+
+#shuriken-belt-content {
+	width: 100%;
+	text-align: center;
+}
+
+#shuriken-belt-content td {
+	border-top: 1px solid #555;
+}
+
+@media (min-width: 501px) {
+	nav > span {
+		display: none;
+	}
+}
+
+@media (max-width: 500px) {
+	header {
+		text-align: center;
+	}
+
+	header > h2 {
+		margin-right: 0;
+		font-size: 1.2em;
+	}
+
+	nav > ul {
+		display: none;
+	}
+
+	nav > span:hover + ul, header:hover > nav > ul, nav:hover > ul {
+		display: block;
+		background: #eee;
+		border: 1px solid black;
+	}
+
+	nav > ul > li {
+		float: none;
+		text-align: right;
+	}
+
+	section > div {
+		float: none;
+	}
+}
