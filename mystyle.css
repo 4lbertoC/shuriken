@@ -4,7 +4,7 @@
 }
 
 body {
-	font-family: Open sans;
+	font-family: Open sans, sans-serif;
 }
 
 header {
@@ -120,6 +120,10 @@ section > div {
 	color: white;
 }
 
+#shurikenBeltContainer > .buttonContainer > input {
+    visibility: hidden;
+}
+
 #shurikenBelt {
 	width: 100%;
 	text-align: center;
@@ -179,4 +183,10 @@ section > div {
 
 .throwing > #throwSection {
 	display: block;
+}
+
+.flyingShuriken {
+    position: absolute;
+    width: 50px;
+    -webkit-transition: 3s linear;
 }
