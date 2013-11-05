@@ -47,7 +47,7 @@
 		
 		function createShuriken(container) {
 		    var shuriken = document.createElement('img'),
-		        position = (-200 - Math.random() * 50 * thrownShurikens.length);
+		        position = (-200 - Math.random() * 20 * thrownShurikens.length);
 		    shuriken.setAttribute('src', 'shuriken.svg');
 		    shuriken.className = "flyingShuriken";
 		    shuriken.style.left = position + 'px';
@@ -94,8 +94,10 @@
     	            position = position + shurikenSpeed;
 	                shuriken.style.left = position + 'px';
     	        }
-	           // var position = screen.availWidth - parseInt(shuriken.style.left);
-	           // shuriken.style.webkitTransform = 'translateX(' + position + 'px)';
+
+    	        // Release the awesome!
+	            // var position = screen.availWidth - parseInt(shuriken.style.left);
+	            // shuriken.style.webkitTransform = 'translateX(' + position + 'px)';
     	    }
     	    setTimeout(animate, 500);
 	    }
