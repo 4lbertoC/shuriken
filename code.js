@@ -16,7 +16,7 @@
 		thrownShurikens = [],
 		usedShurikensCount = 0,
 		
-		shurikenSpeed = 500;
+		shurikenSpeed = 5;
 
 	function takeShurikens(count) {
 		if(window.localStorage) {
@@ -46,14 +46,18 @@
 		main.className = 'throwing';
 		
 		function createShuriken(container) {
-		    var shuriken = document.createElement('img'),
-		        position = (-200 - Math.random() * 20 * thrownShurikens.length);
+			var shurikenContainer = document.createElement('div'),
+		    	shuriken = document.createElement('img');
+		    shurikenContainer.style.left = (-50 - Math.random() * 5 * thrownShurikens.length) + 'px';
+		    shurikenContainer.style.top = (20 + (Math.random() * 50)) + '%';
+		    shurikenContainer.className = "flyingShurikenContainer";
 		    shuriken.setAttribute('src', 'shuriken.svg');
 		    shuriken.className = "flyingShuriken";
-		    shuriken.style.left = position + 'px';
-		    shuriken.style.top = (20 + (Math.random() * 50)) + '%';
-		    shuriken.setAttribute('data-position', position);
-		    return shuriken;
+		    shuriken.weight = (new Array(10000).join('a'));
+
+		    shurikenContainer.appendChild(shuriken);
+
+		    return shurikenContainer;
 		}
 		
 		var shurikenCount = shurikenBelt.childElementCount;
@@ -63,7 +67,7 @@
 		    throwSection.appendChild(shuriken);
 		}
 		
-		setTimeout(animate, 500);
+		setTimeout(animate, 0);
 	}
 
 	function goBack() {
@@ -74,6 +78,8 @@
 		        throwSection.removeChild(thrownShurikens[s]);
 		    }
 		}
+		// Much better with this!
+		// thrownShurikens.length = 0;
 		
 		while(shurikenBelt.hasChildNodes()) {
 		    shurikenBelt.removeChild(shurikenBelt.firstChild);
@@ -89,17 +95,18 @@
 	    if(main.className === 'throwing') {
     	    for(var s in thrownShurikens) {
     	        var shuriken = thrownShurikens[s];
-    	        var position = parseInt(shuriken.style.left);
-    	        if(position < screen.availWidth) {
-    	            position = position + shurikenSpeed;
-	                shuriken.style.left = position + 'px';
-    	        }
+    	        // var position = parseInt(shuriken.style.left);
+    	        // if(position < screen.availWidth) {
+    	        //     position = position + shurikenSpeed;
+	            //     shuriken.style.left = position + 'px';
+    	        // }
 
     	        // Release the awesome!
-	            // var position = screen.availWidth - parseInt(shuriken.style.left);
-	            // shuriken.style.webkitTransform = 'translateX(' + position + 'px)';
+	            var position = screen.availWidth - parseInt(shuriken.style.left);
+	            shuriken.style.webkitTransform = 'translateX(' + position + 'px)';
+	            shuriken.style.webkitTransition = (2 + Math.random() * 2) + 's linear';
     	    }
-    	    setTimeout(animate, 500);
+    	    // setTimeout(animate, 0);
 	    }
 	}
 
