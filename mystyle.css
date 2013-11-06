@@ -113,11 +113,17 @@ section > div {
 	top: 40%;
 }
 
+/*
 #shurikenBeltContainer {
 	border: 2px solid black;
 	border-radius: 4px;
 	background: black;
 	color: white;
+}
+*/
+
+#shurikenBeltContainer {
+	border: 2px solid black;
 }
 
 #shurikenBeltContainer > .buttonContainer > input {
@@ -129,10 +135,12 @@ section > div {
 	text-align: center;
 }
 
+/*
 .shuriken {
 	border-top: 1px solid #555;
 	color: white;
 }
+*/
 
 #throwSection {
 	width: 100%;
@@ -141,6 +149,7 @@ section > div {
 	text-align: center;
 }
 
+/*
 @media (min-width: 501px) {
 	nav > span {
 		display: none;
@@ -176,6 +185,7 @@ section > div {
 		float: none;
 	}
 }
+*/
 
 .throwing > #collectSection {
 	display: none;

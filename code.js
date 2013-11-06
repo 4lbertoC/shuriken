@@ -1,7 +1,5 @@
 (function() {
 	var takeShurikenButton = document.getElementById('takeShurikenButton'),
-	    take5ShurikenButton = document.getElementById('take5ShurikenButton'),
-		take100ShurikenButton = document.getElementById('take100ShurikenButton'),
 		throwShurikenButton = document.getElementById('throwShurikenButton'),
 		goBackButton = document.getElementById('goBackButton'),
 		usedShurikens = document.getElementById('usedShurikens'),
@@ -16,8 +14,15 @@
 		thrownShurikens = [],
 		usedShurikensCount = 0,
 		
-		shurikenSpeed = 5;
+		shurikenSpeed = 5,
 
+		menuAbout = document.getElementById('about');
+
+
+	/**
+	 * Take a shuriken and put it into the belt.
+	 * @param count {number} Number of shurikens to take.
+	 */
 	function takeShurikens(count) {
 		if(window.localStorage) {
 			window.localStorage['usedShurikens'] = window.localStorage['usedShurikens'] || 0;
@@ -42,6 +47,9 @@
 			throwShurikenButton.style.visibility = 'visible';
 	}
 
+	/**
+	 * Throw the shurikens that are currently in the belt.
+	 */
 	function throwShuriken() {
 		main.className = 'throwing';
 		
@@ -70,6 +78,9 @@
 		setTimeout(animate, 0);
 	}
 
+	/**
+	 * Goes back from the shuriken launch field.
+	 */
 	function goBack() {
 		main.className = '';
 		
@@ -91,6 +102,9 @@
 	}
 	
 	var lastTime = 0;
+	/**
+	 * Animate the shurikens.
+	 */
 	function animate() {
 	    if(main.className === 'throwing') {
     	    for(var s in thrownShurikens) {
@@ -110,17 +124,52 @@
 	    }
 	}
 
-    function updateUsedShurikens() {    
+	/**
+	 * Update the numver of shurikens that have been currently thrown.
+	 */
+    function updateUsedShurikens() {
     	if(window.localStorage) {
     		usedShurikensCount = window.localStorage['usedShurikens'] = window.localStorage['usedShurikens'] || 0;
     	}
     	usedShurikens.innerText = usedShurikensCount;
     }
     updateUsedShurikens();
+
+    /**
+     * Shows the about popup.
+     */
+    function showAboutPopup() {
+    	var xhr = new XMLHttpRequest();
+		xhr.onload = function() {
+		  var xml = this.responseText;
+		  parseXmlStuffAndShowAlert(xml);
+		};
+		xhr.open("post", "http://localhost:9615/visits/xml", true);
+		xhr.send('timecode=' + Date.now());
+    }
+    menuAbout.addEventListener('click', showAboutPopup);
+
+    function parseXmlStuffAndShowAlert(xml) {
+    	if(xml[0] != '<') {
+		  	alert('Error getting number of visits.');
+		  } else {
+		  	// parse the xml
+		  }
+    }
+
+    function parseJsonStuffAndShowAlert(json) {
+    	try {
+    		var parsedJson = JSON.parse(json);
+    		var visits = parsedJson.visits;
+    		if(visits) {
+    			alert('Thanks for playing the game!\nThis page has been clicked ' + visits + ' times.');
+    		}
+    	} catch (e) {
+    		alert('Error parsing JSON');
+    	}
+    }
     
-	takeShurikenButton.addEventListener('click', function() { takeShurikens(1); });
-	take5ShurikenButton.addEventListener('click', function() { takeShurikens(5); });
-	take100ShurikenButton.addEventListener('click', function() { takeShurikens(100); });
+	takeShurikenButton.addEventListener('click', function() { takeShurikens(100); });
 
 	throwShurikenButton.addEventListener('click', throwShuriken);
 	goBackButton.addEventListener('click', goBack);
