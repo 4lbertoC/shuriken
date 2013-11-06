@@ -11,7 +11,7 @@
 		shurikenBelt = document.getElementById('shurikenBelt'),
 		shurikenBeltCount = document.getElementById('shurikenBeltCount'),
 
-		main = document.getElementById('main'),
+		main = document.getElementsByTagName('main')[0],
 
 		thrownShurikens = [],
 		usedShurikensCount = 0,
@@ -95,18 +95,18 @@
 	    if(main.className === 'throwing') {
     	    for(var s in thrownShurikens) {
     	        var shuriken = thrownShurikens[s];
-    	        // var position = parseInt(shuriken.style.left);
-    	        // if(position < screen.availWidth) {
-    	        //     position = position + shurikenSpeed;
-	            //     shuriken.style.left = position + 'px';
-    	        // }
+    	        var position = parseInt(shuriken.style.left);
+    	        if(position < screen.availWidth) {
+    	            position = position + shurikenSpeed;
+	                shuriken.style.left = position + 'px';
+    	        }
 
     	        // Release the awesome!
-	            var position = screen.availWidth - parseInt(shuriken.style.left);
-	            shuriken.style.webkitTransform = 'translateX(' + position + 'px)';
-	            shuriken.style.webkitTransition = (2 + Math.random() * 2) + 's linear';
+	            // var position = screen.availWidth - parseInt(shuriken.style.left);
+	            // shuriken.style.webkitTransform = 'translateX(' + position + 'px)';
+	            // shuriken.style.webkitTransition = (2 + Math.random() * 2) + 's linear';
     	    }
-    	    // setTimeout(animate, 0);
+    	    setTimeout(animate, 0);
 	    }
 	}
 
