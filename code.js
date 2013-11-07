@@ -150,8 +150,40 @@
 		shurikenBeltCount.innerText = '';
 	}
 
+	function doPostTo(url, postData, callback) {
+    	var xhr = new XMLHttpRequest();
+		xhr.onload = function() {
+		  callback(this.responseText);
+		};
+		xhr.open("post", url, true);
+		xhr.send(postData);
+    }
+    
+    function parseXmlStuffAndShowAlert(xml) {
+    	if(xml[0] != '<') {
+		  	alert('Error getting number of visits.');
+		  } else {
+		  	// parse the xml
+		  }
+    }
+
+    function parseJsonStuffAndShowAlert(json) {
+    	try {
+    		var parsedJson = JSON.parse(json);
+    		var visits = parsedJson.visits;
+    		if(visits) {
+    			alert('Thanks for playing the game!\nThis page has been clicked ' + visits + ' times.');
+    		}
+    	} catch (e) {
+    		alert('Error parsing JSON');
+    	}
+    }
 
 
+
+
+
+    // MAIN FUNCTIONS
 
 	/**
 	 * Take a shuriken and put it into the belt.
@@ -184,13 +216,7 @@
 		cleanBelt();
 		showThrowButton(false);
 	}
-	
 
-
-
-
-
-	var lastTime = 0;
 	/**
 	 * Animate the shurikens.
 	 */
@@ -213,51 +239,42 @@
 	    }
 	}
 
-    /**
-     * Shows the about popup.
-     */
     function showAboutPopup() {
-    	var xhr = new XMLHttpRequest();
-		xhr.onload = function() {
-		  var xml = this.responseText;
-		  parseXmlStuffAndShowAlert(xml);
-		};
-		xhr.open("post", "http://localhost:9615/visits/xml", true);
-		xhr.send('timecode=' + Date.now());
-    }
-    menuAbout.addEventListener('click', showAboutPopup);
-
-    function parseXmlStuffAndShowAlert(xml) {
-    	if(xml[0] != '<') {
-		  	alert('Error getting number of visits.');
-		  } else {
-		  	// parse the xml
-		  }
-    }
-
-
-
-
-
-
-    function parseJsonStuffAndShowAlert(json) {
-    	try {
-    		var parsedJson = JSON.parse(json);
-    		var visits = parsedJson.visits;
-    		if(visits) {
-    			alert('Thanks for playing the game!\nThis page has been clicked ' + visits + ' times.');
-    		}
-    	} catch (e) {
-    		alert('Error parsing JSON');
+    	function callback(response) {
+    		parseXmlStuffAndShowAlert(response);
     	}
+    	doPostTo("http://localhost:9615/visits/xml", 'timecode=' + Date.now(), callback);
     }
-    
-	takeShurikenButton.addEventListener('click', function() { takeShurikens(1); });
 
+
+
+
+
+    // EVENT LISTENERS
+
+	takeShurikenButton.addEventListener('click', function() { takeShurikens(1); });
 	throwShurikenButton.addEventListener('click', throwShuriken);
 	goBackButton.addEventListener('click', goBack);
 
+    menuAbout.addEventListener('click', showAboutPopup);
+
+
+
+
+
+	// INIT
+
 	updateThrownShurikenCount();
+
+
+
+
+
+
+
+
+
+
 
 
 
