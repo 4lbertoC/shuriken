@@ -4,7 +4,7 @@ var fs = require('fs');
 var visits = 0;
 
 var getXmlVisits = function() {
-	return 'API has been deprecated, use json. Problem?\n\n' +
+	return 'This API has been deprecated, use json instead. Problem?\n\n' +
 	'░░░░░▄▄▄▄▀▀▀▀▀▀▀▀▄▄▄▄▄▄░░░░░░░\n' +
 '░░░░░█░░░░▒▒▒▒▒▒▒▒▒▒▒▒░░▀▀▄░░░░\n' +
 '░░░░█░░░▒▒▒▒▒▒░░░░░░░░▒▒▒░░█░░░\n' +

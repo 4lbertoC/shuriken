@@ -208,3 +208,67 @@ section > div {
 .flyingShuriken {
     -webkit-animation: shurikenAnim 500ms linear infinite;
 }
+
+@-webkit-keyframes messagesAnim {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+#messages {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	border: 2px solid black;
+	padding: 2px;
+	background: blue;
+	color: yellow;
+	cursor: pointer;
+	display: none;
+	-webkit-animation: messagesAnim 1s infinite;
+}
+
+#popup {
+	position: fixed;
+	width: 400px;
+	height: 300px;
+	right: 10;
+	bottom: 10;
+	box-shadow: 10px 10px 10px black;
+	background: #ccc;
+	border: 2px solid black;
+	border-radius: 5px;
+	display: none;
+	padding: 5px;
+}
+
+#close {
+	text-align: center;
+	width: 30px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	border: 2px solid black;
+	background: black;
+	color: white;
+	cursor: pointer;
+}
+
+#popupData {
+	width: 280px;
+	margin-top: 20px;
+}
+
+#popupImage {
+	border: 2px solid black;
+	position: absolute;
+	top: 30px;
+	right: 10px;
+	width: 100px;
+}
