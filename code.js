@@ -12,11 +12,145 @@
 		main = document.getElementsByTagName('main')[0],
 
 		thrownShurikens = [],
-		usedShurikensCount = 0,
+		usedShurikensCount = window.localStorage && (+window.localStorage['usedShurikens']) || 0,
 		
-		shurikenSpeed = 5,
+		shurikenSpeed = 4,
 
-		menuAbout = document.getElementById('about');
+		menuAbout = document.getElementById('about'),
+
+		messageArray = [
+			'Hi Alberto,\n\nA few requests:\n' +
+			'- Add the FAQ menu at the top\n' +
+			'- Make the menu text red when mouse is over it\n' +
+			'- Belt is ugly, make it more ninja\n\n' +
+
+			'Thanks,\n' +
+			'Boss',
+
+			'Hi Alberto,\n\n' +
+
+			'Menu is not responsive.\n' +
+			'Remember: mobile first.\n' +
+			'Always.\n\n' +
+
+			'Thanks,\n' +
+			'Boss',
+
+			'Hi Alberto,\n\n' +
+
+			'I am disappoint.\n' +
+			'Why take only 1 shurikens?\n' +
+			'Take 100.\n\n' +
+
+			'Thanks,\n' +
+			'Boss',
+
+			'Hi Alberto,\n\n' +
+
+			'Shurikens are slow.\n' +
+			'They don\'t kill.\n' +
+			'Make them fast.\n\n' +
+
+			'Thanks,\n' +
+			'Boss',
+
+			'Hi Alberto,\n\n' +
+
+			'Shurikens are fast, but now browser dies if I throw too many.\n' +
+			'What\'s going on?\n\n' +
+
+			'Thanks,\n' +
+			'Boss',
+
+			'Hi Alberto,\n\n' +
+
+			'"About" page does not work.\n' +
+			'What\'s wrong?\n\n' +
+
+			'Thanks,\n' +
+			'Boss'
+		],
+		step = +window.localStorage['step'] || 0,
+		newMessages = document.getElementById('messages'),
+		popup = document.getElementById('popup'),
+		popupData = document.getElementById('popupData');
+
+
+	function addShurikenToBelt(count) {
+		var newTr = document.createElement('tr'),
+			newShuriken = document.createElement('td');
+			newTr.appendChild(newShuriken);
+
+		newShuriken.className = 'shuriken';
+		newShuriken.innerText = 'Shuriken no. ' + (shurikenBelt.childElementCount - count + 2);
+
+		shurikenBelt.appendChild(newTr);
+	}
+
+	function updateShurikenCountInBelt(count) {
+		shurikenBeltCount.innerText = '(' + (shurikenBelt.childElementCount + count) + ')';
+	}
+
+	function updateThrownShurikenCount() {
+		usedShurikensCount = usedShurikensCount + shurikenBelt.childElementCount;
+		if(window.localStorage) {
+			window.localStorage['usedShurikens'] = usedShurikensCount;
+		}
+		usedShurikens.innerText = usedShurikensCount;
+	}
+
+	function showThrowButton(show) {
+		throwShurikenButton.style.visibility = show ? 'visible' : 'hidden';
+	}
+
+	function createShuriken(container) {
+		var shurikenContainer = document.createElement('div'),
+	    	shuriken = document.createElement('img');
+	    shurikenContainer.style.left = (-50 - Math.random() * 5 * thrownShurikens.length) + 'px';
+	    shurikenContainer.style.top = (20 + (Math.random() * 50)) + '%';
+	    shurikenContainer.className = "flyingShurikenContainer";
+	    shuriken.setAttribute('src', 'shuriken.svg');
+	    shuriken.className = "flyingShuriken";
+	    shuriken.weight = (new Array(10000).join('a'));
+
+	    shurikenContainer.appendChild(shuriken);
+
+	    return shurikenContainer;
+	}
+
+	var THROWING_CLASS = 'throwing';
+	function togglePage() {
+		main.className = main.className === THROWING_CLASS ? '' : THROWING_CLASS;
+	}
+
+	function initThrownShurikens() {
+		var shurikenCount = shurikenBelt.childElementCount;
+		for(var i = 0; i < shurikenCount; i++) {
+		    var shuriken = createShuriken();
+		    thrownShurikens.push(shuriken);
+		    throwSection.appendChild(shuriken);
+		}
+	}
+
+	function disposeThrownShurikens() {
+		for(var s in thrownShurikens) {
+		    if(thrownShurikens[s].parentElement === throwSection) {
+		        throwSection.removeChild(thrownShurikens[s]);
+		    }
+		}
+
+		// Much better with this!
+		// thrownShurikens.length = 0;
+	}
+
+	function cleanBelt() {
+		while(shurikenBelt.hasChildNodes()) {
+		    shurikenBelt.removeChild(shurikenBelt.firstChild);
+		}
+		shurikenBeltCount.innerText = '';
+	}
+
+
 
 
 	/**
@@ -24,83 +158,38 @@
 	 * @param count {number} Number of shurikens to take.
 	 */
 	function takeShurikens(count) {
-		if(window.localStorage) {
-			window.localStorage['usedShurikens'] = window.localStorage['usedShurikens'] || 0;
-
+		updateShurikenCountInBelt(count);
+		while(count > 0) {
+			addShurikenToBelt(count--);
 		}
-			var currentShurikenNumber = +window.localStorage['usedShurikens'] + count;
-			window.localStorage['usedShurikens'] = currentShurikenNumber;
-
-			while(count > 0) {
-				var newTr = document.createElement('tr'),
-					newShuriken = document.createElement('td');
-					newTr.appendChild(newShuriken);
-
-				newShuriken.className = 'shuriken';
-				newShuriken.innerText = 'Shuriken no. ' + (currentShurikenNumber - count);
-
-				shurikenBelt.appendChild(newTr);
-				count--;
-			}
-			
-			shurikenBeltCount.innerText = '(' + shurikenBelt.childElementCount + ')';
-			throwShurikenButton.style.visibility = 'visible';
+		showThrowButton(true);
 	}
 
 	/**
 	 * Throw the shurikens that are currently in the belt.
 	 */
 	function throwShuriken() {
-		main.className = 'throwing';
-		
-		function createShuriken(container) {
-			var shurikenContainer = document.createElement('div'),
-		    	shuriken = document.createElement('img');
-		    shurikenContainer.style.left = (-50 - Math.random() * 5 * thrownShurikens.length) + 'px';
-		    shurikenContainer.style.top = (20 + (Math.random() * 50)) + '%';
-		    shurikenContainer.className = "flyingShurikenContainer";
-		    shuriken.setAttribute('src', 'shuriken.svg');
-		    shuriken.className = "flyingShuriken";
-		    shuriken.weight = (new Array(10000).join('a'));
-
-		    shurikenContainer.appendChild(shuriken);
-
-		    return shurikenContainer;
-		}
-		
-		var shurikenCount = shurikenBelt.childElementCount;
-		for(var i = 0; i < shurikenCount; i++) {
-		    var shuriken = createShuriken();
-		    thrownShurikens.push(shuriken);
-		    throwSection.appendChild(shuriken);
-		}
-		
+		togglePage();
+		initThrownShurikens();
 		setTimeout(animate, 0);
 	}
 
 	/**
-	 * Goes back from the shuriken launch field.
+	 * Goes back to the main page from the shuriken throwing field.
 	 */
 	function goBack() {
-		main.className = '';
-		
-		for(var s in thrownShurikens) {
-		    if(thrownShurikens[s].parentElement === throwSection) {
-		        throwSection.removeChild(thrownShurikens[s]);
-		    }
-		}
-		// Much better with this!
-		// thrownShurikens.length = 0;
-		
-		while(shurikenBelt.hasChildNodes()) {
-		    shurikenBelt.removeChild(shurikenBelt.firstChild);
-		}
-		
-		shurikenBeltCount.innerText = '';
-		updateUsedShurikens();
-		throwShurikenButton.style.visibility = 'hidden';
+		togglePage();
+		disposeThrownShurikens();
+		updateThrownShurikenCount();
+		cleanBelt();
+		showThrowButton(false);
 	}
 	
+
+
+
+
+
 	var lastTime = 0;
 	/**
 	 * Animate the shurikens.
@@ -124,17 +213,6 @@
 	    }
 	}
 
-	/**
-	 * Update the numver of shurikens that have been currently thrown.
-	 */
-    function updateUsedShurikens() {
-    	if(window.localStorage) {
-    		usedShurikensCount = window.localStorage['usedShurikens'] = window.localStorage['usedShurikens'] || 0;
-    	}
-    	usedShurikens.innerText = usedShurikensCount;
-    }
-    updateUsedShurikens();
-
     /**
      * Shows the about popup.
      */
@@ -157,6 +235,11 @@
 		  }
     }
 
+
+
+
+
+
     function parseJsonStuffAndShowAlert(json) {
     	try {
     		var parsedJson = JSON.parse(json);
@@ -169,71 +252,17 @@
     	}
     }
     
-	takeShurikenButton.addEventListener('click', function() { takeShurikens(100); });
+	takeShurikenButton.addEventListener('click', function() { takeShurikens(1); });
 
 	throwShurikenButton.addEventListener('click', throwShuriken);
 	goBackButton.addEventListener('click', goBack);
 
+	updateThrownShurikenCount();
 
-	// Messages
 
-	var messageArray = [
-		'Hi Alberto,\n\nA few requests:\n' +
-'- Add the FAQ menu at the top\n' +
-'- Make the menu text red when mouse is over it\n' +
-'- Belt is ugly, make it more ninja\n\n' +
 
-'Thanks,\n' +
-'Boss',
 
-'Hi Alberto,\n\n' +
-
-'Menu is not responsive.\n' +
-'Remember: mobile first.\n' +
-'Always.\n\n' +
-
-'Thanks,\n' +
-'Boss',
-
-'Hi Alberto,\n\n' +
-
-'I am disappoint.\n' +
-'Why take only 1 shurikens?\n' +
-'Take 100.\n\n' +
-
-'Thanks,\n' +
-'Boss',
-
-'Hi Alberto,\n\n' +
-
-'Shurikens are slow.\n' +
-'They don\'t kill.\n' +
-'Make them fast.\n\n' +
-
-'Thanks,\n' +
-'Boss',
-
-'Hi Alberto,\n\n' +
-
-'Shurikens are fast, but now browser dies if I throw too many.\n' +
-'What\'s going on?\n\n' +
-
-'Thanks,\n' +
-'Boss',
-
-'Hi Alberto,\n\n' +
-
-'"About" page does not work.\n' +
-'What\'s wrong?\n\n' +
-
-'Thanks,\n' +
-'Boss'
-	];
-
-	var step = +window.localStorage['step'] || 0;
-	var newMessages = document.getElementById('messages');
-	var popup = document.getElementById('popup');
-	var popupData = document.getElementById('popupData');
+	// Controls for the messages
 	document.body.addEventListener('keyup', function(e) {
 		if(e.keyCode === 70 && e.altKey && popup.style.display !== 'block' && step < messageArray.length) {
 			newMessages.style.display = 'block';

@@ -1,5 +1,6 @@
 var http = require('http');
 var fs = require('fs');
+var port = process.env.PORT || 9615;
 
 var visits = 0;
 
@@ -46,4 +47,5 @@ http.createServer(function (req, res) {
 		res.writeHead(509, {'Content-Type': 'text/plain', 'Access-Control-Allow-Origin': '*'});
 		res.end();
 	}
-}).listen(9615);
+}).listen(port);
+console.log('Listening on port ' + 9615);
