@@ -261,14 +261,14 @@ section > div {
 }
 
 #popupData {
-	width: 280px;
-	margin-top: 20px;
+	width: 260px;
+	margin-top: 10px;
 }
 
 #popupImage {
 	border: 2px solid black;
 	position: absolute;
-	top: 30px;
+	top: 50px;
 	right: 10px;
 	width: 100px;
 }

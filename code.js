@@ -20,7 +20,7 @@
 
 		messageArray = [
 			'Hi Alberto,\n\nA few requests:\n' +
-			'- Add the FAQ menu at the top\n' +
+			'- Add FAQ to menu\n' +
 			'- Make the menu text red when mouse is over it\n' +
 			'- Belt is ugly, make it more ninja\n\n' +
 
@@ -82,7 +82,7 @@
 			newTr.appendChild(newShuriken);
 
 		newShuriken.className = 'shuriken';
-		newShuriken.innerText = 'Shuriken no. ' + (shurikenBelt.childElementCount - count + 2);
+		newShuriken.innerText = 'Shuriken no. ' + (shurikenBelt.childElementCount + 1);
 
 		shurikenBelt.appendChild(newTr);
 	}
