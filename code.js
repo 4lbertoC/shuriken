@@ -148,6 +148,7 @@
 		    shurikenBelt.removeChild(shurikenBelt.firstChild);
 		}
 		shurikenBeltCount.innerText = '';
+		showThrowButton(false);
 	}
 
 	function doPostTo(url, postData, callback) {
@@ -214,7 +215,6 @@
 		disposeThrownShurikens();
 		updateThrownShurikenCount();
 		cleanBelt();
-		showThrowButton(false);
 	}
 
 	/**
@@ -246,8 +246,12 @@
     	doPostTo("http://localhost:9615/visits/xml", 'timecode=' + Date.now(), callback);
     }
 
-
-
+    function devOrientHandler(evt) {
+    	if(evt.gamma > 75) {
+    		cleanBelt();
+    		alert('Belt emptied');
+    	}
+    }
 
 
     // EVENT LISTENERS
@@ -259,6 +263,11 @@
     menuAbout.addEventListener('click', showAboutPopup);
 
 
+    // See http://www.html5rocks.com/en/tutorials/device/orientation/
+    if (window.DeviceOrientationEvent) {
+	  // Listen for the event and handle DeviceOrientationEvent object
+	  window.addEventListener('deviceorientation', devOrientHandler, false);
+	}
 
 
 
