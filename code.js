@@ -3,7 +3,7 @@
 		throwShurikenButton = document.getElementById('throwShurikenButton'),
 		goBackButton = document.getElementById('goBackButton'),
 		usedShurikens = document.getElementById('usedShurikens'),
-		
+
 		throwSection = document.getElementById('throwSection'),
 
 		shurikenBelt = document.getElementById('shurikenBelt'),
@@ -13,67 +13,10 @@
 
 		thrownShurikens = [],
 		usedShurikensCount = window.localStorage && (+window.localStorage['usedShurikens']) || 0,
-		
+
 		shurikenSpeed = 4,
 
-		menuAbout = document.getElementById('about'),
-
-		messageArray = [
-			'Hi Alberto,\n\nA few requests:\n' +
-			'- Add FAQ to menu\n' +
-			'- Make the menu text red when mouse is over it\n' +
-			'- Belt is ugly, make it more ninja\n\n' +
-
-			'Thanks,\n' +
-			'Boss',
-
-			'Hi Alberto,\n\n' +
-
-			'Menu is not responsive.\n' +
-			'Remember: mobile first.\n' +
-			'Always.\n\n' +
-
-			'Thanks,\n' +
-			'Boss',
-
-			'Hi Alberto,\n\n' +
-
-			'I am disappoint.\n' +
-			'Why take only 1 shurikens?\n' +
-			'Take 100.\n\n' +
-
-			'Thanks,\n' +
-			'Boss',
-
-			'Hi Alberto,\n\n' +
-
-			'Shurikens are slow.\n' +
-			'They don\'t kill.\n' +
-			'Make them fast.\n\n' +
-
-			'Thanks,\n' +
-			'Boss',
-
-			'Hi Alberto,\n\n' +
-
-			'Shurikens are fast, but now browser dies if I throw too many.\n' +
-			'What\'s going on?\n\n' +
-
-			'Thanks,\n' +
-			'Boss',
-
-			'Hi Alberto,\n\n' +
-
-			'"About" page does not work.\n' +
-			'What\'s wrong?\n\n' +
-
-			'Thanks,\n' +
-			'Boss'
-		],
-		step = +window.localStorage['step'] || 0,
-		newMessages = document.getElementById('messages'),
-		popup = document.getElementById('popup'),
-		popupData = document.getElementById('popupData');
+		menuAbout = document.getElementById('about');
 
 
 	function addShurikenToBelt(count) {
@@ -111,9 +54,10 @@
 	    shurikenContainer.className = "flyingShurikenContainer";
 	    shuriken.setAttribute('src', 'shuriken.svg');
 	    shuriken.className = "flyingShuriken";
-	    shuriken.weight = (new Array(10000).join('a'));
-
-	    shurikenContainer.appendChild(shuriken);
+		// Note by Boss: do not remove!!!					// -_-_-_-_-_-_-_,------,
+	    shuriken.weight = (new Array(10000).join('nya'));	// _-_-_-_-_-_-_-|   /\_/\
+															// -_-_-_-_-_-_-~|__( ^ .^)
+	    shurikenContainer.appendChild(shuriken);			// _-_-_-_-_-_-_-""  ""
 
 	    return shurikenContainer;
 	}
@@ -140,7 +84,7 @@
 		}
 
 		// Much better with this!
-		// thrownShurikens.length = 0;
+ 		// thrownShurikens.length = 0;
 	}
 
 	function cleanBelt() {
@@ -159,25 +103,29 @@
 		xhr.open("post", url, true);
 		xhr.send(postData);
     }
-    
+
     function parseXmlStuffAndShowAlert(xml) {
+		var text = 'This is a game in which you throw shurikens.\n';
     	if(xml[0] != '<') {
-		  	alert('Error getting number of visits.');
-		  } else {
-		  	// parse the xml
-		  }
+			text += '# Error getting number of visits. #';
+		} else {
+		  	// parse the xml here
+		}
+		alert(text);
     }
 
     function parseJsonStuffAndShowAlert(json) {
+		var text = 'This is a game in which you throw shurikens.\n';
     	try {
     		var parsedJson = JSON.parse(json);
     		var visits = parsedJson.visits;
     		if(visits) {
-    			alert('Thanks for playing the game!\nThis page has been clicked ' + visits + ' times.');
+    			text += 'This page has been visited ' + visits + ' times.';
     		}
     	} catch (e) {
-    		alert('Error parsing JSON');
+    		text += '# Error getting number of visits. #';
     	}
+		alert(text);
     }
 
 
@@ -206,6 +154,15 @@
 		initThrownShurikens();
 		setTimeout(animate, 0);
 	}
+	throwShurikenButton.addEventListener('click', throwShuriken);
+
+	/**
+	 * Put a shuriken into the belt.
+	 */
+    function takeShurikenHandler() {
+    	takeShurikens(1);
+    }
+    takeShurikenButton.addEventListener('click', takeShurikenHandler);
 
 	/**
 	 * Goes back to the main page from the shuriken throwing field.
@@ -216,6 +173,7 @@
 		updateThrownShurikenCount();
 		cleanBelt();
 	}
+	goBackButton.addEventListener('click', goBack);
 
 	/**
 	 * Animate the shurikens.
@@ -231,20 +189,20 @@
     	        }
 
     	        // Release the awesome!
-	            // var position = screen.availWidth - parseInt(shuriken.style.left);
-	            // shuriken.style.webkitTransform = 'translateX(' + position + 'px)';
-	            // shuriken.style.webkitTransition = (2 + Math.random() * 2) + 's linear';
+ 	            // var position = screen.availWidth - parseInt(shuriken.style.left);
+ 	            // shuriken.style.webkitTransform = 'translateX(' + position + 'px)';
+	 	        // shuriken.style.webkitTransition = (2 + Math.random() * 2) + 's linear';
     	    }
     	    setTimeout(animate, 0);
 	    }
 	}
 
     function showAboutPopup() {
-    	function callback(response) {
-    		parseXmlStuffAndShowAlert(response);
-    	}
-    	doPostTo("http://localhost:9615/visits/xml", 'timecode=' + Date.now(), callback);
+    	doPostTo("http://localhost:9615/visits/xml",
+			'timecode=' + Date.now(),
+			parseXmlStuffAndShowAlert);
     }
+    menuAbout.addEventListener('click', showAboutPopup);
 
     function devOrientHandler(evt) {
     	if(evt.gamma > 75) {
@@ -253,16 +211,6 @@
     	}
     }
 
-
-    // EVENT LISTENERS
-
-	takeShurikenButton.addEventListener('click', function() { takeShurikens(1); });
-	throwShurikenButton.addEventListener('click', throwShuriken);
-	goBackButton.addEventListener('click', goBack);
-
-    menuAbout.addEventListener('click', showAboutPopup);
-
-
     // See http://www.html5rocks.com/en/tutorials/device/orientation/
     if (window.DeviceOrientationEvent) {
 	  // Listen for the event and handle DeviceOrientationEvent object
@@ -270,46 +218,7 @@
 	}
 
 
-
 	// INIT
-
 	updateThrownShurikenCount();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// Controls for the messages
-	document.body.addEventListener('keyup', function(e) {
-		if(e.keyCode === 70 && e.altKey && popup.style.display !== 'block' && step < messageArray.length) {
-			newMessages.style.display = 'block';
-		}
-		if(e.keyCode === 68) {
-		window.localStorage['step'] = step = step - 1;
-		}
-		if(e.keyCode === 71) {
-		window.localStorage['step'] = step = step + 1;
-		}
-		if(e.keyCode === 82) {
-		window.localStorage['step'] = step = 0;
-		}
-	});
-	newMessages.addEventListener('click', function() {
-		newMessages.style.display = 'none';
-		popup.style.display = 'block';
-		popupData.innerText = messageArray[step];
-	});
-	document.getElementById('close').addEventListener('click', function() {
-		popup.style.display = 'none';
-		window.localStorage['step'] = step = step + 1;
-	});
 })()
